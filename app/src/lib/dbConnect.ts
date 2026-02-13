@@ -3,55 +3,35 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error("❌ Please define MONGODB_URI in .env.local");
+  throw new Error("Please define MONGODB_URI in .env.local");
 }
 
-// ================= GLOBAL CACHE TYPE =================
+// ===== GLOBAL TYPE =====
 declare global {
-  // eslint-disable-next-line no-var
-  var mongooseCache: {
+  var mongoose: {
     conn: typeof mongoose | null;
     promise: Promise<typeof mongoose> | null;
   };
 }
 
-// ================= CREATE CACHE =================
-const globalWithMongoose = global as typeof globalThis & {
-  mongooseCache?: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  };
-};
+// ===== CACHE =====
+const cached = global.mongoose || { conn: null, promise: null };
+global.mongoose = cached;
 
-const cached = globalWithMongoose.mongooseCache || {
-  conn: null,
-  promise: null,
-};
-
-globalWithMongoose.mongooseCache = cached;
-
-// ================= CONNECT FUNCTION =================
+// ===== CONNECT FUNCTION =====
 async function dbConnect(): Promise<typeof mongoose> {
-  // already connected
   if (cached.conn) return cached.conn;
 
-  // create connection promise
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
-    }).then((mongooseInstance) => {
-      console.log("✅ MongoDB Connected");
-      return mongooseInstance;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI, { bufferCommands: false })
+      .then((m) => {
+        console.log("MongoDB Connected");
+        return m;
+      });
   }
 
-  try {
-    cached.conn = await cached.promise;
-  } catch (error) {
-    cached.promise = null;
-    throw error;
-  }
-
+  cached.conn = await cached.promise;
   return cached.conn;
 }
 
