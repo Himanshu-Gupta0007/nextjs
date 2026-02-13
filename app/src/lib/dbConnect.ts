@@ -1,42 +1,47 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
+const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
   throw new Error("❌ Please define MONGODB_URI in .env.local");
 }
 
-/**
- * Global is used here to maintain a cached connection
- * across hot reloads in development.
- */
-
-interface MongooseCache {
-  conn: typeof mongoose | null;
-  promise: Promise<typeof mongoose> | null;
+// ================= GLOBAL CACHE TYPE =================
+declare global {
+  // eslint-disable-next-line no-var
+  var mongooseCache: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  };
 }
 
-// @ts-ignore
-let cached: MongooseCache = global.mongoose;
+// ================= CREATE CACHE =================
+const globalWithMongoose = global as typeof globalThis & {
+  mongooseCache?: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  };
+};
 
-if (!cached) {
-  // @ts-ignore
-  cached = global.mongoose = { conn: null, promise: null };
-}
+const cached = globalWithMongoose.mongooseCache || {
+  conn: null,
+  promise: null,
+};
 
+globalWithMongoose.mongooseCache = cached;
+
+// ================= CONNECT FUNCTION =================
 async function dbConnect(): Promise<typeof mongoose> {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  // already connected
+  if (cached.conn) return cached.conn;
 
+  // create connection promise
   if (!cached.promise) {
-    const opts = {
+    cached.promise = mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    }).then((mongooseInstance) => {
       console.log("✅ MongoDB Connected");
-      return mongoose;
+      return mongooseInstance;
     });
   }
 
