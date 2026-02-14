@@ -46,6 +46,12 @@ const userSchema = new Schema<IUser>(
   }
 );
 
+
+
+
+
+
+
 // ================= MODEL =================
 const User = models.User || model<IUser>("User", userSchema);
 
