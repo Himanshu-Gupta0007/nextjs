@@ -17,6 +17,15 @@ declare global {
   var _mongoose: MongooseCache | undefined;
 }
 
+
+
+
+
+
+
+
+
+
 // ===== CACHE =====
 const cached: MongooseCache = global._mongoose ?? {
   conn: null,
