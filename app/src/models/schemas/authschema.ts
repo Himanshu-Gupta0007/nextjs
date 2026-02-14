@@ -42,6 +42,21 @@ export const signupSchema = z
         message: "Passwords do not match",
       });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
   });
 
 // ================= TYPE =================
