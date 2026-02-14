@@ -15,6 +15,15 @@ export const signupSchema = z
   .object({
     name: z
       .string()
+
+
+
+
+
+
+
+
+      
       .trim()
       .min(2, "Name must be at least 2 characters"),
 
@@ -56,7 +65,7 @@ export const signupSchema = z
 
 
 
-    
+
   });
 
 // ================= TYPE =================
