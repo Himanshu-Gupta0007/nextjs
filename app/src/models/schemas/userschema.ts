@@ -22,5 +22,19 @@ export const registerSchema = z.object({
     .default("student"),
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ================= TYPE =================
 export type RegisterInput = z.infer<typeof registerSchema>;
