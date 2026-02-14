@@ -15,17 +15,9 @@ export const signupSchema = z
   .object({
     name: z
       .string()
-
-
-
-
-
-
-
-
-      
       .trim()
-      .min(2, "Name must be at least 2 characters"),
+      .min(2, "Name must be at least 2 characters")
+      .regex(/^[A-Za-z ]+$/, "Name can only contain letters"),
 
     email: z
       .string()
@@ -35,13 +27,16 @@ export const signupSchema = z
 
     password: passwordRule,
 
-    confirmPassword: z.string().trim(),
+    confirmPassword: z
+      .string()
+      .trim()
+      .min(1, "Please confirm your password"),
 
-    acceptTerms: z
-      .boolean()
-      .refine((val) => val === true, {
+    acceptTerms: ( {
+      errorMap: () => ({
         message: "You must accept the terms & conditions",
       }),
+    }),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
@@ -51,21 +46,6 @@ export const signupSchema = z
         message: "Passwords do not match",
       });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   });
 
 // ================= TYPE =================
