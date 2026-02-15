@@ -10,13 +10,6 @@ const passwordRule = z
   .regex(/[a-z]/, "Password must contain at least one lowercase letter")
   .regex(/[0-9]/, "Password must contain at least one number");
 
-
-
-
-
-
-
-
 // ================= SIGNUP SCHEMA =================
 export const signupSchema = z
   .object({
@@ -34,37 +27,17 @@ export const signupSchema = z
 
     password: passwordRule,
 
-
-
-
-
-
-
-
-
-
     confirmPassword: z
       .string()
       .trim()
       .min(1, "Please confirm your password"),
 
+    // ⭐ FIXED
     acceptTerms: ( {
       errorMap: () => ({
         message: "You must accept the terms & conditions",
       }),
     }),
-
-
-
-
-
-
-
-
-
-
-
-    
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
