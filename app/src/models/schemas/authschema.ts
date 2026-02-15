@@ -16,7 +16,7 @@ const passwordRule = z
 
 
 
-  
+
 // ================= SIGNUP SCHEMA =================
 export const signupSchema = z
   .object({
@@ -33,6 +33,15 @@ export const signupSchema = z
       .transform((val) => val.toLowerCase()),
 
     password: passwordRule,
+
+
+
+
+
+
+
+
+    
 
     confirmPassword: z
       .string()
