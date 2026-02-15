@@ -41,7 +41,7 @@ export const signupSchema = z
 
 
 
-    
+
 
     confirmPassword: z
       .string()
@@ -53,6 +53,18 @@ export const signupSchema = z
         message: "You must accept the terms & conditions",
       }),
     }),
+
+
+
+
+
+
+
+
+
+
+
+    
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
