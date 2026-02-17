@@ -28,6 +28,12 @@ const passwordRule = z
 
 
   
+
+
+
+
+
+  
 // ================= SIGNUP SCHEMA =================
 export const signupSchema = z
   .object({
