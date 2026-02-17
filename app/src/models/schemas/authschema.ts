@@ -10,6 +10,22 @@ import { z } from "zod";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ================= PASSWORD RULE =================
 const passwordRule = z
   .string()
@@ -33,7 +49,7 @@ const passwordRule = z
 
 
 
-  
+
 // ================= SIGNUP SCHEMA =================
 export const signupSchema = z
   .object({
