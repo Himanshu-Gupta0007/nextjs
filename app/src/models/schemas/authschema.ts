@@ -1,31 +1,5 @@
 import { z } from "zod";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ================= PASSWORD RULE =================
 const passwordRule = z
   .string()
@@ -35,20 +9,6 @@ const passwordRule = z
   .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[a-z]/, "Password must contain at least one lowercase letter")
   .regex(/[0-9]/, "Password must contain at least one number");
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
 
 // ================= SIGNUP SCHEMA =================
 export const signupSchema = z
@@ -72,7 +32,7 @@ export const signupSchema = z
       .trim()
       .min(1, "Please confirm your password"),
 
-    // ⭐ FIXED
+    // ✅ Correct checkbox validation
     acceptTerms: ( {
       errorMap: () => ({
         message: "You must accept the terms & conditions",
