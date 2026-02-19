@@ -39,6 +39,17 @@ export const signupSchema = z
       }),
     }),
   })
+
+
+
+
+
+
+
+
+
+
+  
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
       ctx.addIssue({
@@ -50,7 +61,7 @@ export const signupSchema = z
   });
 
 
-  
+
 
 // ================= TYPE =================
 export type SignupInput = z.infer<typeof signupSchema>;
