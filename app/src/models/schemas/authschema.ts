@@ -49,5 +49,8 @@ export const signupSchema = z
     }
   });
 
+
+  
+
 // ================= TYPE =================
 export type SignupInput = z.infer<typeof signupSchema>;
