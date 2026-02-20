@@ -58,7 +58,7 @@ export const signupSchema = z
 
 
 
-  
+
   
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
@@ -71,6 +71,16 @@ export const signupSchema = z
   });
 
 
+
+
+
+
+
+
+
+
+
+  
 
 
 // ================= TYPE =================
