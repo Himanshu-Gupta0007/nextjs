@@ -32,34 +32,12 @@ export const signupSchema = z
       .trim()
       .min(1, "Please confirm your password"),
 
-    // ✅ Correct checkbox validation
-    acceptTerms: ( {
-      errorMap: () => ({
+    acceptTerms: z
+      .boolean()
+      .refine((val) => val === true, {
         message: "You must accept the terms & conditions",
       }),
-    }),
   })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
       ctx.addIssue({
@@ -69,19 +47,6 @@ export const signupSchema = z
       });
     }
   });
-
-
-
-
-
-
-
-
-
-
-
-  
-
 
 // ================= TYPE =================
 export type SignupInput = z.infer<typeof signupSchema>;
