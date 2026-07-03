@@ -27,14 +27,5 @@ export const registerSchema = z.object({
 
 
 
-
-
-
-
-
-
-
-
-
 // ================= TYPE =================
 export type RegisterInput = z.infer<typeof registerSchema>;

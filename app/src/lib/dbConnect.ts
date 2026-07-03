@@ -20,12 +20,6 @@ declare global {
 
 
 
-
-
-
-
-
-
 // ===== CACHE =====
 const cached: MongooseCache = global._mongoose ?? {
   conn: null,
